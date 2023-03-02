@@ -12,8 +12,6 @@ export class ThoughtComponent implements OnInit {
     modelo: '',
   };
 
-  @Input() ano: string = '';
-
   constructor() {}
 
   ngOnInit(): void {}
