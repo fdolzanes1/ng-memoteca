@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Thoughts } from '../thoughts.interface';
+import { ThoughtsService } from '../thoughts.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-thought',
@@ -6,13 +9,18 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./thought.component.css'],
 })
 export class ThoughtComponent implements OnInit {
-  @Input() pensamento = {
+  @Input() pensamento: Thoughts = {
+    id: 0,
     conteudo: '',
     autoria: '',
     modelo: '',
   };
 
-  constructor() {}
+  constructor(
+    private service: ThoughtsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {}
 
@@ -21,5 +29,11 @@ export class ThoughtComponent implements OnInit {
       return 'pensamento-g';
     }
     return 'pensamento-p';
+  }
+
+  excluirPensamento() {
+    this.service.excluir(this.pensamento).subscribe(() => {
+      this.router.navigate(['/listarPensamento']);
+    });
   }
 }
